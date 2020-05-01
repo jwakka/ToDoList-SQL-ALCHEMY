@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+    <title>Todo App</title>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div>Add a new todo item: 
+
+        {% for message in form.message.errors %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+        <form action="{{ url_for('add') }}" method="POST">
+
+            {{ form.message.label }}
+            {{ form.message }}
+
+            {{form.submit}}
+
+        </form>
+    </div>
+    <div>
+        <h2>Incomplete Items</h2>
+        <ul>
+            {% for todo in incomplete %}
+            <li style="font-size: 30pt">{{ todo.text }} <a class = "button1" href="{{ url_for('complete', id=todo.id) }}">Mark As Complete</a></li>
+            {% endfor %}    
+        </ul>
+        <h2>Completed Items</h2>
+        <ul>
+            {% for todo in complete %}
+            <li style="font-size: 30pt">{{ todo.text }}<a class ="button1" href="{{ url_for('delete', id=todo.id)}}" >Delete Task</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
